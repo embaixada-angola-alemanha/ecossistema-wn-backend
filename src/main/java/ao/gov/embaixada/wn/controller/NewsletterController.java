@@ -46,20 +46,20 @@ public class NewsletterController {
     // --- Admin endpoints ---
 
     @GetMapping("/api/v1/newsletter/subscribers")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<List<NewsletterSubscriberResponse>> listSubscribers() {
         return ApiResponse.success(service.findActiveSubscribers());
     }
 
     @GetMapping("/api/v1/newsletter/subscribers/count")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<Map<String, Long>> countSubscribers() {
         return ApiResponse.success(Map.of("count", service.countActiveSubscribers()));
     }
 
     @DeleteMapping("/api/v1/newsletter/subscribers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasRole('wn-admin')")
+    @PreAuthorize("hasRole('WN-ADMIN')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }

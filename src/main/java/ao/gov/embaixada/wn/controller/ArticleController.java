@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/articles")
-@PreAuthorize("hasAnyRole('wn-editor','wn-journalist','wn-admin')")
+@PreAuthorize("hasAnyRole('WN-EDITOR','WN-JOURNALIST','WN-ADMIN')")
 public class ArticleController {
 
     private final ArticleService service;
@@ -61,7 +61,7 @@ public class ArticleController {
     }
 
     @PatchMapping("/{id}/estado")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> updateEstado(@PathVariable UUID id,
                                                       @RequestParam EstadoArtigo estado) {
         return ApiResponse.success(service.updateEstado(id, estado));
@@ -69,7 +69,7 @@ public class ArticleController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }

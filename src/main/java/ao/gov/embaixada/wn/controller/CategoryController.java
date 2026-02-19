@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/categories")
-@PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+@PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
 public class CategoryController {
 
     private final CategoryService service;

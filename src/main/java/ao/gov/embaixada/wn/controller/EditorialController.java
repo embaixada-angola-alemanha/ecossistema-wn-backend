@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/editorial")
-@PreAuthorize("hasAnyRole('wn-editor','wn-journalist','wn-reviewer','wn-admin')")
+@PreAuthorize("hasAnyRole('WN-EDITOR','WN-JOURNALIST','WN-REVIEWER','WN-ADMIN')")
 public class EditorialController {
 
     private final ArticleService articleService;
@@ -35,33 +35,33 @@ public class EditorialController {
     // --- Workflow state transitions ---
 
     @PatchMapping("/articles/{id}/submit")
-    @PreAuthorize("hasAnyRole('wn-journalist','wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-JOURNALIST','WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> submit(@PathVariable UUID id) {
         versionService.createVersion(id, "Submitted for review", "workflow");
         return ApiResponse.success(articleService.updateEstado(id, EstadoArtigo.SUBMITTED));
     }
 
     @PatchMapping("/articles/{id}/review")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-reviewer','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-REVIEWER','WN-ADMIN')")
     public ApiResponse<ArticleResponse> startReview(@PathVariable UUID id) {
         return ApiResponse.success(articleService.updateEstado(id, EstadoArtigo.IN_REVIEW));
     }
 
     @PatchMapping("/articles/{id}/publish")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> publish(@PathVariable UUID id) {
         versionService.createVersion(id, "Published", "workflow");
         return ApiResponse.success(articleService.updateEstado(id, EstadoArtigo.PUBLISHED));
     }
 
     @PatchMapping("/articles/{id}/reject")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-reviewer','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-REVIEWER','WN-ADMIN')")
     public ApiResponse<ArticleResponse> reject(@PathVariable UUID id) {
         return ApiResponse.success(articleService.updateEstado(id, EstadoArtigo.DRAFT));
     }
 
     @PatchMapping("/articles/{id}/archive")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> archive(@PathVariable UUID id) {
         return ApiResponse.success(articleService.updateEstado(id, EstadoArtigo.ARCHIVED));
     }
@@ -69,14 +69,14 @@ public class EditorialController {
     // --- Scheduling ---
 
     @PatchMapping("/articles/{id}/schedule")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> schedule(@PathVariable UUID id,
                                                   @Valid @RequestBody ScheduleRequest req) {
         return ApiResponse.success(articleService.schedulePublication(id, req.scheduledAt()));
     }
 
     @DeleteMapping("/articles/{id}/schedule")
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public ApiResponse<ArticleResponse> cancelSchedule(@PathVariable UUID id) {
         return ApiResponse.success(articleService.cancelSchedule(id));
     }

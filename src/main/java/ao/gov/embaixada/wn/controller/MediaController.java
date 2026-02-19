@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/media")
-@PreAuthorize("hasAnyRole('wn-editor','wn-journalist','wn-admin')")
+@PreAuthorize("hasAnyRole('WN-EDITOR','WN-JOURNALIST','WN-ADMIN')")
 public class MediaController {
 
     private final MediaService service;
@@ -75,7 +75,7 @@ public class MediaController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyRole('wn-editor','wn-admin')")
+    @PreAuthorize("hasAnyRole('WN-EDITOR','WN-ADMIN')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
