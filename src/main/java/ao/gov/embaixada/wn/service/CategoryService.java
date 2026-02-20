@@ -52,7 +52,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findActive() {
-        return repo.findByActivoOrderBySortOrderAsc(true).stream()
+        return repo.findActiveOrderByArticleCountDesc().stream()
                 .map(this::toResponse).toList();
     }
 

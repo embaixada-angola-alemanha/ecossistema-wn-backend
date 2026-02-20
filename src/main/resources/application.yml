@@ -41,8 +41,8 @@ ecossistema:
   storage:
     enabled: true
     endpoint: http://localhost:9000
-    access-key: minioadmin
-    secret-key: minioadmin
+    access-key: minio_admin
+    secret-key: minio_dev_2026
     default-bucket: wn-media
   security:
     enabled: true
