@@ -116,7 +116,7 @@ class CategoryServiceTest {
 
     @Test
     void shouldFindActive() {
-        when(repo.findByActivoOrderBySortOrderAsc(true)).thenReturn(List.of(createEntity("active")));
+        when(repo.findActiveOrderByArticleCountDesc()).thenReturn(List.of(createEntity("active")));
 
         List<CategoryResponse> result = categoryService.findActive();
 
