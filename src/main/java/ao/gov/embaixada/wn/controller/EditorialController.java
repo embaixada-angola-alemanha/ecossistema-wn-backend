@@ -6,6 +6,7 @@ import ao.gov.embaixada.wn.enums.EstadoArtigo;
 import ao.gov.embaixada.wn.service.ArticleService;
 import ao.gov.embaixada.wn.service.ArticleVersionService;
 import ao.gov.embaixada.wn.service.EditorialCommentService;
+import ao.gov.embaixada.wn.service.SpellCheckService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,13 +24,16 @@ public class EditorialController {
     private final ArticleService articleService;
     private final ArticleVersionService versionService;
     private final EditorialCommentService commentService;
+    private final SpellCheckService spellCheckService;
 
     public EditorialController(ArticleService articleService,
                                 ArticleVersionService versionService,
-                                EditorialCommentService commentService) {
+                                EditorialCommentService commentService,
+                                SpellCheckService spellCheckService) {
         this.articleService = articleService;
         this.versionService = versionService;
         this.commentService = commentService;
+        this.spellCheckService = spellCheckService;
     }
 
     // --- Workflow state transitions ---
@@ -138,5 +142,12 @@ public class EditorialController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable UUID commentId) {
         commentService.deleteComment(commentId);
+    }
+
+    // --- Spell & Grammar Check ---
+
+    @GetMapping("/articles/{id}/spell-check")
+    public ApiResponse<SpellCheckResult> spellCheck(@PathVariable UUID id) {
+        return ApiResponse.success(spellCheckService.checkArticle(id));
     }
 }
